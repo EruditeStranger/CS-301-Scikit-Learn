@@ -56,25 +56,32 @@ true = [100, 50, 30, 20]
 pred = [90, 50, 50, 30]
 
 #Mean Absolute Error (MAE)
+print("MAE by hand")
 print((10 + 0 + 20 + 10)/4.)
 
 # calculate MAE using scikit-learn
+print("MAE by sklearn")
 print(metrics.mean_absolute_error(true, pred))
 
 # calculate Mean Squared Error by hand
+print("MSE by hand")
 print((10**2 + 0**2 + 20**2 + 10**2)/4.)
 
 # calculate MSE using scikit-learn
+print("MSE using sklearn")
 print(metrics.mean_squared_error(true, pred))
 
 # calculate RootMSE by hand
+print("Root MSE by hand")
 print(np.sqrt((10**2 + 0**2 + 20**2 + 10**2)/4.))
 
 
 # calculate RMSE using scikit-learn
+print("Root MSE by sklearn")
 print(np.sqrt(metrics.mean_squared_error(true, pred)))
 
 #Sales Predictions using RMSE
+print("Sales predications using RMSE")
 print(np.sqrt(metrics.mean_squared_error(y_test, y_pred)))
 
 
@@ -82,7 +89,7 @@ print(np.sqrt(metrics.mean_squared_error(y_test, y_pred)))
 ####FEATURE SELECTION####
 
 # This is something we do to reduce dimensionality.
-# While I won't go into the details of how exactly this is done, 
+# While I won't go into the details of how exactly this is done,
 # here's an simple demonstration of how reducing one non-contributing feature can affect the evulation metrics.
 
 # create a Python list of feature names
@@ -104,4 +111,5 @@ linreg.fit(X_train, y_train)
 y_pred = linreg.predict(X_test)
 
 # compute the RMSE of our predictions
+print("New MSE Post Feature Selection")
 print(np.sqrt(metrics.mean_squared_error(y_test, y_pred)))
