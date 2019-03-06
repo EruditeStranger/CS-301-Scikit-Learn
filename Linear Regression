@@ -1,0 +1,103 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn import metrics #for mean absolute error/mean squared error
+import numpy as np
+
+# read CSV file
+data = pd.read_csv('Advertising.csv', index_col=0)
+
+print(data.shape)
+
+# display the first 5 rows
+print(data.head())
+
+# display the last 5 rows
+print(data.tail())
+
+# create a Python list of feature names
+feature_cols = ['TV', 'Radio', 'Newspaper']
+
+#Select X and y for regression
+# use the list to select a subset of the original DataFrame
+X = data[feature_cols]
+
+# check the type and shape of X
+print(type(X))
+print(X.shape)
+
+
+# select a Series from the DataFrame
+y = data['Sales']
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=1)
+
+# default split is 75% for training and 25% for testing
+print(X_train.shape)
+print(y_train.shape)
+print(X_test.shape)
+print(y_test.shape)
+
+# instantiate
+linreg = LinearRegression()
+
+# fit the model to the training data (learn the coefficients)
+linreg.fit(X_train, y_train)
+
+# make predictions on the testing set
+y_pred = linreg.predict(X_test)
+
+print(y_pred)
+
+#####MODEL EVALUATION#####
+
+# define true and predicted response values
+true = [100, 50, 30, 20]
+pred = [90, 50, 50, 30]
+
+#MAE
+print((10 + 0 + 20 + 10)/4.)
+
+# calculate MAE using scikit-learn
+print(metrics.mean_absolute_error(true, pred))
+
+# calculate MSE by hand
+print((10**2 + 0**2 + 20**2 + 10**2)/4.)
+
+# calculate MSE using scikit-learn
+print(metrics.mean_squared_error(true, pred))
+
+# calculate RMSE by hand
+print(np.sqrt((10**2 + 0**2 + 20**2 + 10**2)/4.))
+
+
+# calculate RMSE using scikit-learn
+print(np.sqrt(metrics.mean_squared_error(true, pred)))
+
+#Sales Predictions using RMSE
+print(np.sqrt(metrics.mean_squared_error(y_test, y_pred)))
+
+
+
+####FEATURE SELECTION####
+
+# create a Python list of feature names
+feature_cols = ['TV', 'Radio']
+
+# use the list to select a subset of the original DataFrame
+X = data[feature_cols]
+
+# select a Series from the DataFrame
+y = data.Sales
+
+# split into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=1)
+
+# fit the model to the training data (learn the coefficients)
+linreg.fit(X_train, y_train)
+
+# make predictions on the testing set
+y_pred = linreg.predict(X_test)
+
+# compute the RMSE of our predictions
+print(np.sqrt(metrics.mean_squared_error(y_test, y_pred)))
